@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/constants.dart';
-import 'package:flutter_application_1/meditation/pages/bottomBar.dart';
+import 'package:pijak_app/chat/chat.dart';
+import 'package:pijak_app/constants.dart';
+import 'package:pijak_app/meditation/pages/bottomBar.dart';
 // import 'package:flutter_application_1/meditation/pages/meditationhomepage.dart';
 import '/self_test/screen/questionnaire_screen.dart';
 // import '/meditation/utils.dart';
@@ -20,6 +21,8 @@ class HomeScreen extends HookConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          elevation: 0,
+          backgroundColor: Colors.white,
           content: Text(
               'Dalam 2 minggu terakhir, seberapa sering Anda terganggu oleh masalah-masalah berikut?'),
           title: Row(
@@ -51,7 +54,10 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                   );
                 },
-                child: Text('Mulai'),
+                child: Text(
+                  'Mulai',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
@@ -62,7 +68,7 @@ class HomeScreen extends HookConsumerWidget {
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
-      elevation: 1,
+      elevation: 0,
       backgroundColor: Colors.white,
       leading: Padding(
         padding: const EdgeInsets.only(left: 20),
@@ -588,7 +594,16 @@ class HomeScreen extends HookConsumerWidget {
                                 Row(
                                   children: [
                                     ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return Chat();
+                                            },
+                                          ),
+                                        );
+                                      },
                                       style: ButtonStyle(
                                         minimumSize:
                                             MaterialStateProperty.all<Size>(

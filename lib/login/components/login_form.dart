@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../Signup/signup_screen.dart';
-import 'package:flutter_application_1/home_screen/homeScreen.dart';
+import 'package:pijak_app/home_screen/homeScreen.dart';
 
 class LoginForm extends StatelessWidget {
   static final _formKey = GlobalKey<FormState>();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/background.dart';
-import 'package:flutter_application_1/responsive.dart';
+import 'package:pijak_app/components/background.dart';
+import 'package:pijak_app/responsive.dart';
 import 'components/login_form.dart';
 import 'components/login_image.dart';
 // import 'package:hooks_riverpod/hooks_riverpod.dart';

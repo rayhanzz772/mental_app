@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/constants.dart';
-import 'package:flutter_application_1/responsive.dart';
-import 'package:flutter_application_1/signup/components/signup_form.dart';
+import 'package:pijak_app/constants.dart';
+import 'package:pijak_app/responsive.dart';
+import 'package:pijak_app/signup/components/signup_form.dart';
 import '../../components/background.dart';
 import 'components/signup_image.dart';
 

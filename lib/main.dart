@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/splash_screen/splash_screen.dart';
+import 'package:pijak_app/splash_screen/splash_screen.dart';
 import '../../../constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'self_test/provider/router_provider.dart';

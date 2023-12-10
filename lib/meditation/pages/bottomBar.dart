@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_application_1/constants.dart' as constants;
-import 'package:flutter_application_1/meditation/pages/calendar_page.dart';
-import 'package:flutter_application_1/meditation/pages/meditation_page.dart';
-import 'package:flutter_application_1/meditation/pages/meditationhomepage.dart';
-import 'package:flutter_application_1/meditation/utils.dart';
+import 'package:pijak_app/meditation/pages/calendar_page.dart';
+import 'package:pijak_app/meditation/pages/meditation_page.dart';
+import 'package:pijak_app/meditation/pages/meditationhomepage.dart';
+import 'package:pijak_app/meditation/utils.dart';
 
 class bottomBar extends StatefulWidget {
   final String username;
@@ -36,18 +36,23 @@ class _HomeScreenState extends State<bottomBar> {
               title: Text('Exit App'),
               content: Text('Are you sure want to exit?'),
               actions: <Widget>[
+                SizedBox(height: 15),
                 ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: Text('No'),
-                ),
-                TextButton(
                   onPressed: () {
                     SystemNavigator.pop();
                   },
-                  child: Text('Yes'),
-                  style: TextButton.styleFrom(
-                      backgroundColor: Color(0xFFE17A1B),
-                      primary: Colors.black),
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 15),
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(
+                    'No',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
