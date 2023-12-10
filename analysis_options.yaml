@@ -1,0 +1,13 @@
+# include: package:flutter_lints/flutter.yaml
+
+
+analyzer:
+  exclude:
+    - build/**
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+    - lib/**.gr.dart
+    - lib/**.moor.dart
+    - lib/generated/** # Generated locale code by intl
+    - lib/**/**.config.dart
+    - lib/api/**
