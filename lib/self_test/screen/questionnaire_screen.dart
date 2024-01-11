@@ -1,10 +1,13 @@
 import 'package:animations/animations.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pijak_app/constants.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pijak_app/self_test/screen/history_screen.dart';
 import 'package:pressable/pressable.dart';
 
 import '../db/questionnaire.dart';
@@ -18,12 +21,12 @@ class QuestionnaireScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(questionnaireProvider.notifier);
     final state = ref.watch(questionnaireProvider);
+    final _auth = FirebaseAuth.instance;
 
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
         backgroundColor: kPrimaryColor,
-        leading: const CustomBackButton(),
       ),
       body: PageTransitionSwitcher(
         transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
@@ -239,6 +242,7 @@ class _ResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Set<int> score = {result.score};
     return SafeArea(
       child: SizedBox(
         width: double.infinity,
@@ -296,24 +300,63 @@ class _ResultView extends StatelessWidget {
                 ),
               ),
             ),
-            const Spacer(),
-            TextButton.icon(
+            SizedBox(
+              height: 10,
+            ),
+            MaterialButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              height: 40,
               onPressed: () {
-                context.go('/history');
+                addDataToFirestore(score);
+                Navigator.pop(context);
               },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                foregroundColor: Colors.white70,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+              child: Text(
+                "Back to home page",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
                 ),
               ),
-              icon: const HeroIcon(HeroIcons.calendar),
-              label: const Text('View history'),
+              color: kPrimaryColor,
             ),
+            const Spacer(),
           ],
         ),
       ),
     );
+  }
+
+  void addDataToFirestore(Set<int> score) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid;
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      CollectionReference ref = firebaseFirestore.collection('score');
+
+      // Mendapatkan tanggal hari ini
+      DateTime now = DateTime.now();
+      int day = now.day;
+      int month = now.month;
+      int year = now.year;
+
+      await ref.add({
+        'score': score.toList(),
+        'keterangan': result.result.text,
+        'uid': uid,
+        'tanggal': {
+          'day': day,
+          'month': month,
+          'year': year,
+        },
+        // Tambahkan field lain yang ingin Anda tambahkan di sini
+      }).then((value) {
+        print('Data added successfully!');
+      }).catchError((error) {
+        print('Failed to add data: $error');
+      });
+    } else {
+      print('User is not logged in!');
+    }
   }
 }

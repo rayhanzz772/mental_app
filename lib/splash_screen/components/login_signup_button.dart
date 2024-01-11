@@ -38,7 +38,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return SignUpScreen();
+                  return Register();
                 },
               ),
             );

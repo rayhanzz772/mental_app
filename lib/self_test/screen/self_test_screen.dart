@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:heroicons/heroicons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:pijak_app/self_test/screen/history_screen.dart';
 import 'package:pressable/pressable.dart';
 
 class SelfTest extends HookConsumerWidget {
@@ -22,7 +23,10 @@ class SelfTest extends HookConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              context.go('/history');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HistoryScreen()),
+              );
             },
             icon: const HeroIcon(HeroIcons.calendar),
           ),

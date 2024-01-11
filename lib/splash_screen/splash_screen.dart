@@ -1,7 +1,4 @@
-// splash_screen.dart
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'dart:async';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -17,8 +14,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   Future<void> navigateToHome() async {
     await Future.delayed(Duration(seconds: 4)); // Simulate a delay
-    GoRouter.of(context)
-        .go('/loginscreen'); // Navigate to the home screen after 2 seconds
+    Navigator.pushReplacementNamed(context, '/loginscreen');
+    // Navigate to the login screen after 4 seconds
+    // Replace '/loginscreen' with your desired route name
   }
 
   @override

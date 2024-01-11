@@ -1,6 +1,6 @@
 // import 'package:flutter_application_1/home_screen/homeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:pijak_app/chat/chat.dart';
+import 'package:pijak_app/chat/modules/home/views/home_view.dart';
 import 'package:pijak_app/home_screen/homeScreen.dart';
 import 'package:pijak_app/login/login_screen.dart';
 import 'package:pijak_app/meditation/pages/meditationhomepage.dart';
@@ -27,9 +27,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: 'homescreen',
-            builder: (context, state) => const HomeScreen(
-              username: AutofillHints.username,
-            ),
           ),
           GoRoute(
             path: 'questionnaire',
@@ -41,7 +38,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(
             path: 'chat',
-            builder: (context, state) => const Chat(),
+            builder: (context, state) => const HomeView(),
           ),
           GoRoute(
             path: 'history',

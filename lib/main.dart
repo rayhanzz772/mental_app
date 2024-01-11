@@ -1,45 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:pijak_app/firebase_options.dart';
+import 'package:pijak_app/home_screen/homeScreen.dart';
+import 'package:pijak_app/login/login_screen.dart';
+import 'package:pijak_app/signup/signup_screen.dart';
 import 'package:pijak_app/splash_screen/splash_screen.dart';
-import '../../../constants.dart';
+import 'package:pijak_app/constants.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'self_test/provider/router_provider.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter_application_1/signup/signup_screen.dart';
-// import 'package:flutter_application_1/splash_screen/splash_screen.dart';
-// import 'package:device_preview/device_preview.dart';
-// import 'package:flutter_application_1/home_screen/homeScreen.dart';
-// import 'package:flutter_application_1/login/login_screen.dart';
 
-void main() {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WelcomeScreen(),
-    ),
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Menunda pembuatan MyApp dengan Future.delayed
-  Future.delayed(Duration(seconds: 2), () {
-    runApp(
-      const ProviderScope(
-        child: MyApp(),
-      ),
-    );
-  });
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends HookConsumerWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-    return MaterialApp.router(
+  Widget build(BuildContext context) {
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
+      // Set initial route or routes here as needed
+      routes: {
+        // Remove redundant '/' route since home is set to WelcomeScreen()
+        '/LoginScreen': (context) => LoginScreen(),
+        '/SignUpScreen': (context) => Register(),
+      },
+      // This function will be used to generate routes using the router provider
       theme: ThemeData(
-        fontFamily:
-            'Poppins', // Set font family yang ingin digunakan di seluruh aplikasi
+        fontFamily: 'Poppins',
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Color.fromARGB(255, 240, 239, 239),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -64,17 +63,6 @@ class MyApp extends HookConsumerWidget {
           ),
         ),
       ),
-      routerConfig: router,
-      // initialRoute: '/',
-      // routes: {
-      //   '/': (context) =>
-      //       WelcomeScreen(), // Mengganti HomeScreen dengan SplashScreen
-      //   '/LoginScreen': (context) => LoginScreen(),
-      //   '/SignUpScreen': (context) => SignUpScreen(),
-      //   '/homeScreen': (context) => HomeScreen(
-      //         username: AutofillHints.username,
-      //       ),
-      // Gunakan homeScreen sebagai nama rute untuk HomeScreen
     );
   }
 }

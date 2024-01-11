@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "36693461614",
+    "project_id": "pijak-91dc9",
+    "storage_bucket": "pijak-91dc9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36693461614:android:916b2b211922a932f1747f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHq000Qt8l3YvhVTRADGUy8NIMz-RM2mE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

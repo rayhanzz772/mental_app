@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pijak_app/chat/chat.dart';
+import 'package:pijak_app/chat/modules/chat_text/views/chat_text_view.dart';
+import 'package:pijak_app/chat/modules/home/views/home_view.dart';
 import 'package:pijak_app/constants.dart';
 import 'package:pijak_app/meditation/pages/bottomBar.dart';
 // import 'package:flutter_application_1/meditation/pages/meditationhomepage.dart';
@@ -11,10 +12,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import '/self_test/db/database.dart';
 import '/self_test/provider/history_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends HookConsumerWidget {
-  final String username;
-  const HomeScreen({Key? key, required this.username}) : super(key: key);
+  final String userEmail;
+
+  const HomeScreen(this.userEmail, {super.key});
 
   void _showDialog(BuildContext context) {
     showDialog(
@@ -107,6 +111,8 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = FirebaseAuth.instance;
+    final String trimmedEmail = userEmail.split('@').first;
     final history = ref.watch(historyProvider);
     final formatter = useMemoized(() => DateFormat('dd MMMM yyyy'));
     double kWidth = MediaQuery.of(context).size.width * 0.9;
@@ -167,7 +173,7 @@ class HomeScreen extends HookConsumerWidget {
                                                                     155)),
                                                       ),
                                                       Text(
-                                                        ' $username',
+                                                        ' $trimmedEmail',
                                                         style: TextStyle(
                                                             fontSize: 24,
                                                             fontWeight:
@@ -599,7 +605,7 @@ class HomeScreen extends HookConsumerWidget {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) {
-                                              return Chat();
+                                              return ChatTextView();
                                             },
                                           ),
                                         );
@@ -679,19 +685,88 @@ class HomeScreen extends HookConsumerWidget {
                                           ),
                                         ),
                                       ),
-                                      if (history.value != null)
-                                        ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: history.value!.length,
-                                          itemBuilder: (context, index) {
-                                            final item = history.value![index];
-                                            return _Item(
-                                              entry: item,
-                                              title:
-                                                  formatter.format(item.date),
+                                      StreamBuilder<QuerySnapshot>(
+                                        stream: FirebaseFirestore.instance
+                                            .collection("score")
+                                            .where('uid',
+                                                isEqualTo: currentUser
+                                                    .currentUser!.uid)
+                                            .snapshots(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot<QuerySnapshot>
+                                                snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return CircularProgressIndicator();
+                                          } else if (snapshot.hasError) {
+                                            return Text(
+                                                'Error: ${snapshot.error}');
+                                          } else {
+                                            final List<DocumentSnapshot>
+                                                historyList =
+                                                snapshot.data!.docs;
+                                            return ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: historyList.length,
+                                              itemBuilder: (context, index) {
+                                                String keterangan =
+                                                    historyList[index]
+                                                        ['keterangan'];
+                                                List<
+                                                    dynamic> scores = historyList[
+                                                        index]['score'] ??
+                                                    []; // Mengambil nilai score dengan tipe List<dynamic>
+                                                Map<String,
+                                                    dynamic> tanggal = historyList[
+                                                        index]['tanggal'] ??
+                                                    {}; // Mengambil nilai tanggal dengan tipe Map<String, dynamic>
+
+                                                return Card(
+                                                  shape: RoundedRectangleBorder(
+                                                    side: BorderSide(
+                                                        color: Colors.grey,
+                                                        width: 1.0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                  elevation: 0,
+                                                  color: Colors.white,
+                                                  margin: EdgeInsets.symmetric(
+                                                      vertical: 8,
+                                                      horizontal: 16),
+                                                  child: Padding(
+                                                    padding: EdgeInsets.all(16),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          '$keterangan',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        SizedBox(height: 8),
+                                                        Text(
+                                                          'Score: ${scores.join(", ")} / 27', // Mencetak nilai score dari array
+                                                        ),
+                                                        SizedBox(height: 8),
+                                                        Text(
+                                                            'Tanggal: ${tanggal['day']}/${tanggal['month']}/${tanggal['year']}'), // Mencetak nilai tanggal dari map
+                                                        SizedBox(height: 8),
+                                                        // Add other fields as needed
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                             );
-                                          },
-                                        ),
+                                          }
+                                        },
+                                      ),
                                     ],
                                   ),
                                 ),

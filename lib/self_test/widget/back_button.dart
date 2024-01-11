@@ -10,9 +10,9 @@ class CustomBackButton extends StatelessWidget {
     return IconButton(
       onPressed: () {
         if (context.canPop()) {
-          context.pop('/');
+          Navigator.pop(context); // Kembali ke halaman sebelumnya
         } else {
-          context.go('/homescreen');
+          Navigator.pop(context); // Kembali ke halaman sebelumnya
         }
       },
       icon: const HeroIcon(HeroIcons.arrowLeft),

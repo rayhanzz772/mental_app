@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:draggable_fab/draggable_fab.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 import '../utils.dart';
 
@@ -18,6 +19,7 @@ class MeditationPage extends StatefulWidget {
 class _MeditationPageState extends State<MeditationPage> {
   bool isActive = false;
   int selectedIndex = 0;
+  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -50,18 +52,29 @@ class _MeditationPageState extends State<MeditationPage> {
       ),
       floatingActionButton: SafeArea(
         child: DraggableFab(
-          child: FloatingActionButton(
-            backgroundColor: kPrimaryColor,
-            onPressed: () {
-              setState(() {
-                isActive = !isActive;
-              });
-            },
-            child: Icon(
-              isActive ? Icons.pause : Icons.play_arrow,
-              size: 24.0,
-              color: white,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              FloatingActionButton(
+                backgroundColor: kPrimaryColor,
+                onPressed: () {
+                  setState(() {
+                    if (isActive) {
+                      player.pause(); // Jika sedang diputar, jeda audio
+                    } else {
+                      player.play(UrlSource(
+                          'https://dl183.filemate4.shop/?file=M3R4SUNiN3JsOHJ6WWQ2a3NQS1Y5ZGlxVlZIOCtyZ01sOW9xeUI0c0VhUkNxY1prOGVHbEw0SkdPdWtDM2Rua0Y5ZFk4QUhJY01TRGJVcmJrSUVwVjJlVTlkTjQ2eG5DNDkxbEMrOGhFMFRlek5lc2gyWWp4Q1BFYzR5REdLZ0ZLM0IrckIxSzkyQ1cxT0hkcXhEc3VuQ28raHpVUEhCZTVXNWRiYU9XNHBaUzBEU2NPSzYyaThaUzZ6V0p2NTVMaUE9PQ%3D%3D'));
+                    }
+                    isActive = !isActive; // Toggle status pemutaran audio
+                  });
+                },
+                child: Icon(
+                  isActive ? Icons.pause : Icons.play_arrow,
+                  size: 24.0,
+                  color: white,
+                ),
+              ),
+            ],
           ),
         ),
       ),
