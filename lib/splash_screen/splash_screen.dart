@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:pijak_app/login/login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -9,14 +12,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
-    navigateToHome(); // Call the method to navigate to the home screen
-  }
-
-  Future<void> navigateToHome() async {
-    await Future.delayed(Duration(seconds: 4)); // Simulate a delay
-    Navigator.pushReplacementNamed(context, '/loginscreen');
-    // Navigate to the login screen after 4 seconds
-    // Replace '/loginscreen' with your desired route name
+    // Add a delay to simulate a splash screen
+    Timer(Duration(seconds: 2), () {
+      // Navigate to the login screen after the delay
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+    });
   }
 
   @override
@@ -25,8 +28,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body: Center(
         child: Image.asset(
           'assets/images/splash_screen.png', // Replace with your splash screen image path
-          width: 200,
-          height: 200,
+          width: 300,
+          height: 300,
         ),
       ),
     );

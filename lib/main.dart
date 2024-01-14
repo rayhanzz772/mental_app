@@ -29,10 +29,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: WelcomeScreen(),
       // Set initial route or routes here as needed
       routes: {
-        // Remove redundant '/' route since home is set to WelcomeScreen()
         '/LoginScreen': (context) => LoginScreen(),
         '/SignUpScreen': (context) => Register(),
       },

@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     String rool = 'patient';
     return Scaffold(
-      backgroundColor: Colors.orange[900],
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
                           height: 80,
                         ),
                         Image.asset(
-                          "assets/images/logo.png",
+                          "assets/images/splash_screen.png",
                           height: 150,
                         ),
                         SizedBox(

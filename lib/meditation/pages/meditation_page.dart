@@ -63,7 +63,7 @@ class _MeditationPageState extends State<MeditationPage> {
                       player.pause(); // Jika sedang diputar, jeda audio
                     } else {
                       player.play(UrlSource(
-                          'https://dl183.filemate4.shop/?file=M3R4SUNiN3JsOHJ6WWQ2a3NQS1Y5ZGlxVlZIOCtyZ01sOW9xeUI0c0VhUkNxY1prOGVHbEw0SkdPdWtDM2Rua0Y5ZFk4QUhJY01TRGJVcmJrSUVwVjJlVTlkTjQ2eG5DNDkxbEMrOGhFMFRlek5lc2gyWWp4Q1BFYzR5REdLZ0ZLM0IrckIxSzkyQ1cxT0hkcXhEc3VuQ28raHpVUEhCZTVXNWRiYU9XNHBaUzBEU2NPSzYyaThaUzZ6V0p2NTVMaUE9PQ%3D%3D'));
+                          'https://firebasestorage.googleapis.com/v0/b/pijak-91dc9.appspot.com/o/meditasi.mp3?alt=media&token=0ccbb653-5d4a-4eff-966a-a7918aa05454'));
                     }
                     isActive = !isActive; // Toggle status pemutaran audio
                   });
